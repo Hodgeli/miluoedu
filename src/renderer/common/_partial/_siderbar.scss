@@ -1,0 +1,36 @@
+.siderbar {
+  position: absolute;
+  top: 66px;
+  left: 0;
+  width: 200px;
+  height: 700-66px;
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      width: 100%;
+      height: 60px;
+      line-height: 60px;
+      padding-left: 30px;
+      color: #000;
+      &:hover{
+        color:#fff;
+        background: #6fcc3f;
+        &:before {
+          background: #fff;
+        }
+      }
+      &:before {
+        content: "";
+        display: inline-block;
+        width: 4px;
+        height: 4px;
+        background-color: #000;
+        border-radius: 50%;
+        margin-right: 10px;
+        vertical-align: middle;
+      }
+    }
+  }
+}

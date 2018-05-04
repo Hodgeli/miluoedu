@@ -1,0 +1,25 @@
+@mixin component($url) {
+  display: inline-block;
+  width: 228px;
+  height: 136px;
+  text-align: center;
+  background: #1aa9f5;
+  cursor: pointer;
+  .logo, .title {
+    margin:0 auto;
+  }
+  .logo {
+    display: inline-block;
+    width: 60px;
+    height: 69px;
+    margin-top: 20px;
+    background: url('../welcome/img/'+$url+'.png') no-repeat;
+  }
+  .title {
+    margin-top: 10px;
+    color: #fff;
+  }
+  &:hover {
+    background-color: #37b4f6;
+  }
+}
