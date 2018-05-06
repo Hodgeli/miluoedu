@@ -74,3 +74,17 @@ app.on('ready', () => {
   if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
 })
  */
+const ipc = require('electron').ipcMain
+const dialog = require('electron').dialog
+
+ipc.on('save-dialog', function (event) {
+    const options = {
+        title: '保存表格',
+        filters: [
+            { name: 'Excel', extensions: ['xlsx'] }
+        ]
+    }
+    dialog.showSaveDialog(options, function (filename) {
+        event.sender.send('saved-file', filename)
+    })
+})
