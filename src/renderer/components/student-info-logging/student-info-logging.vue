@@ -24,6 +24,8 @@
         </div>
         <div class="content-wrapper">
             <input class="file-input" type="file" multiple="false" id="sheetjs-input" accept="xls,xlsx" @change="onchange" />
+            <button id="save-dialog" v-show="data.length>0" @click="saveExcel">保存表格到指定位置</button>
+            <div id="out-table" v-show="false"></div>
             <div class="table-wrapper">
                 <el-button  class="btn-addRow" @click="addRow">
                     <span>+</span>
@@ -182,25 +184,26 @@
                     var HTML = XLSX.utils.sheet_to_html(ws);
 
                     document.getElementById('out-table').innerHTML = HTML;
-                    /* 显示导出Excel按钮 */
-                    document.getElementById('export-table').style.visibility = "visible";
                 };
 
                 reader.readAsArrayBuffer(file);
             },
-            onexportByHtml: function () {
-                /* html表格转excel */
-                var wb = XLSX.utils.table_to_book(document.getElementById('out-table'));
-                /* 生成文件，导出D盘 */
-                XLSX.writeFile(wb, "D://sheetjs_html.xlsx");
-            },
-            onexportByJson: function () {
-                /* json数组转换excel */
-                var worksheet = XLSX.utils.aoa_to_sheet(this.data);
-                var new_workbook = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(new_workbook, worksheet, "sheetjs");
-                /* 生成文件，导出D盘 */
-                XLSX.writeFile(new_workbook, "D://sheetjs_json.xlsx");
+            saveExcel:function () {
+                const ipc = require('electron').ipcRenderer
+
+                const saveBtn = document.getElementById('save-dialog')
+
+                saveBtn.addEventListener('click', function (event) {
+                    ipc.send('save-dialog')
+                })
+
+                ipc.on('saved-file', function (event, path) {
+                    if (!path) path = '无路径'
+                    /* html表格转excel */
+                    var wb = XLSX.utils.table_to_book(document.getElementById('out-table'));
+                    /* 生成文件，导出D盘 */
+                    XLSX.writeFile(wb, path);
+                })
             }
         }
     }
