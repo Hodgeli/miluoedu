@@ -1,99 +1,80 @@
 <template>
 <div class="student-info-logging">
-    <div class="wrapper">
-        <div class="header">
-            <div class="logo-wrapper">
-            </div>
-            <div class="about-wrapper">
-                <span class="txt">关于我们</span>
-            </div>
-            <router-link to="/">
-                <div class="goback-wrapper">
-                    <span class="txt">返回首页</span>
-                </div>
-            </router-link>
-        </div>
-        <div class="siderbar">
-            <ul>
-                <li class="active">学生花名册录入</li>
-                <li>学生成绩录入</li>
-                <li>特长分录入</li>
-                <li>学科评价参数录入</li>
-                <li>自定义评价公式</li>
-            </ul>
-        </div>
-        <div class="content-wrapper">
-            <input class="file-input" type="file" multiple="false" id="sheetjs-input" accept="xls,xlsx" @change="onchange" />
-            <button id="save-dialog" v-show="data.length>0" @click="saveExcel">保存表格到指定位置</button>
-            <div id="out-table" v-show="false"></div>
-            <div class="table-wrapper">
-                <el-button  class="btn-addRow" @click="addRow">
-                    <span>+</span>
-                </el-button>
-                <el-table
-                        class="userlist tb-edit"
-                        :highlight-current-row="true"
-                        @row-click="handleCurrentChange"
-                        :data="userlist.slice((currentPage-1)*pagesize,currentPage*pagesize)">
-                    <el-table-column
-                            prop="姓名"
-                            label="用户名"
-                            min-width="80">
-                        <template scope="scope">
-                            <el-input size="small" v-model="scope.row.姓名"
-                                      @change="handleEdit(scope.$index, scope.row)">
-                            </el-input>
-                            <span>{{ scope.row.姓名}}</span>
-                            <!--<el-input  v-model="scope.row.姓名" v-if="scope.row.姓名"-->
-                            <!--@blur="loseFcous(scope.$index, scope.row)" > </el-input>-->
-                            <!--<span style="margin-left: 10px" v-else>{{ scope.row.姓名 }}</span>-->
-                        </template>
-                    </el-table-column>
-                    <el-table-column
-                            prop="学号"
-                            label="学号"
-                            min-width="80">
-                        <template scope="scope">
-                            <el-input size="small" v-model="scope.row.学号"
-                                      @change="handleEdit(scope.$index, scope.row)">
-                            </el-input>
-                            <span>{{ scope.row.学号}}</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column
-                            prop="班级"
-                            label="班级"
-                            min-width="80">
-                        <template scope="scope">
-                            <el-input size="small" v-model="scope.row.班级"
-                                      @change="handleEdit(scope.$index, scope.row)">
-                            </el-input>
-                            <span>{{ scope.row.班级}}</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column
-                            prop="年级"
-                            label="年级"
-                            min-width="80">
-                        <template scope="scope">
-                            <el-input size="small" v-model="scope.row.年级"
-                                      @change="handleEdit(scope.$index, scope.row)">
-                            </el-input>
-                            <span>{{ scope.row.年级}}</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column
-                            label="操作"
-                            min-width="80">
-                        <template slot-scope="scope">
-                            <el-button
-                                    size="mini"
-                                    type="danger"
-                                    @click.native.prevent="handleDelete(scope.$index, scope.row, userlist)">删除</el-button>
-                        </template>
-                    </el-table-column>
-                </el-table>
-                <el-pagination
+    <div class="control-wrapper">
+        <input class="file-input" type="file" multiple="false" id="sheetjs-input" accept="xls,xlsx" @change="onchange" />
+        <button id="save-dialog" v-show="data.length>0" @click="saveExcel">保存表格到指定位置</button>
+        <div id="out-table" v-show="false"></div>
+    </div>
+    <div class="table-wrapper">
+        <el-button  class="btn-addRow" @click="addRow">
+            <span>+</span>
+        </el-button>
+        <el-table
+                id="tb-edit"
+                class="userlist"
+                border
+                :highlight-current-row="true"
+                @row-click="handleCurrentChange"
+                :data="userlist.slice((currentPage-1)*pagesize,currentPage*pagesize)">
+            <el-table-column
+                    prop="姓名"
+                    label="用户名"
+                    min-width="80">
+                <template scope="scope">
+                    <el-input size="small" v-model="scope.row.姓名"
+                              @change="handleEdit(scope.$index, scope.row)">
+                    </el-input>
+                    <span>{{ scope.row.姓名}}</span>
+                    <!--<el-input  v-model="scope.row.姓名" v-if="scope.row.姓名"-->
+                    <!--@blur="loseFcous(scope.$index, scope.row)" > </el-input>-->
+                    <!--<span style="margin-left: 10px" v-else>{{ scope.row.姓名 }}</span>-->
+                </template>
+            </el-table-column>
+            <el-table-column
+                    prop="学号"
+                    label="学号"
+                    min-width="80">
+                <template scope="scope">
+                    <el-input size="small" v-model="scope.row.学号"
+                              @change="handleEdit(scope.$index, scope.row)">
+                    </el-input>
+                    <span>{{ scope.row.学号}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column
+                    prop="班级"
+                    label="班级"
+                    min-width="80">
+                <template scope="scope">
+                    <el-input size="small" v-model="scope.row.班级"
+                              @change="handleEdit(scope.$index, scope.row)">
+                    </el-input>
+                    <span>{{ scope.row.班级}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column
+                    prop="年级"
+                    label="年级"
+                    min-width="80">
+                <template scope="scope">
+                    <el-input size="small" v-model="scope.row.年级"
+                              @change="handleEdit(scope.$index, scope.row)">
+                    </el-input>
+                    <span>{{ scope.row.年级}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column
+                    label="操作"
+                    min-width="80">
+                <template slot-scope="scope">
+                    <el-button
+                            size="mini"
+                            type="danger"
+                            @click.native.prevent="handleDelete(scope.$index, scope.row, userlist)">删除</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+        <el-pagination
                         background
                         layout="prev, pager, next"
                         :total="userlist.length"
@@ -101,8 +82,6 @@
                         :current-page.sync = "currentPage"
                         @current-change="current_change">
                 </el-pagination>
-            </div>
-        </div>
     </div>
 </div>
 </template>
@@ -115,10 +94,8 @@
 //    console.log('workSheetsFromFile is ',JSON.stringify(workSheetsFromFile))
     import XLSX from 'xlsx'
     import ElInput from "../../../../node_modules/element-ui/packages/input/src/input.vue";
-    export default {
-        created() {
 
-        },
+    export default {
         components: {ElInput},
         data() {
             return {
@@ -173,7 +150,7 @@
                     var wsname = wb.SheetNames[0];
                     var ws = wb.Sheets[wsname];
 
-                    /* excel转换json数组,加上{header:1}是普通数组，不写是对象数组 */
+                    /* excel转换json数组,加上{pagehead:1}是普通数组，不写是对象数组 */
                     self.data = XLSX.utils.sheet_to_json(ws);
 //          this.$nextTick(() => {
                     self.userlist = self.data;
@@ -210,44 +187,63 @@
 </script>
 
 <style lang="scss" scoped>
-.wrapper {
-    position: relative;
-    width: 1142px;
-    height: 700px;
-    background: #dce4e7;
-    @import '../../common/_partial/header';
-    @import '../../common/_partial/siderbar';
-    .siderbar {
-        .active {
-            color:#fff;
-            background: #6fcc3f;
+.control-wrapper {
+    width: 100%;
+    height: 120px;
+    background: #fff;
+}
+.table-wrapper {
+    padding: 0 18px;
+    .btn-addRow {
+        float: right;
+    }
+    #tb-edit td {
+        padding: 7px 0 ;
+    }
+    .userlist {
+        .el-table__body-wrapper {
+            .el-table__body {
+                .el-table__row {
+                    td {
+                        width: 100px;
+                        font-size: 24px;
+                        padding: 7px 0  !important;
+                    }
+                }
+            }
         }
     }
-    .content-wrapper {
-        position: absolute;
-        top: 66px;
-        left: 220px;
-        width: 1142-250px;
-        height: 700-66px;
-        .table-wrapper {
-            .btn-addRow {
-                /*position: absolute;*/
-                /*top:10px;*/
-                /*right:10px;*/
-                float: right;
+    #tb-edit {
+        font-size: 12px;
+        td {
+            padding: 7px 0!important;
+        }
+        td, th {
+            padding: 7px 0 !important;
+        }
+        .el-table {
+            font-size: 12px;
+            .el-table__body td {
+                padding: 7px 0 !important;
             }
-            .tb-edit {
-                .el-input {
-                    display: none
+            .el-table__row {
+                td {
+                    padding: 7px 0 !important;
                 }
-                .current-row {
-                    .el-input {
-                        display: block
-                    }
-                    .el-input+span {
-                        display: none
-                    }
-                }
+            }
+            td, th {
+                padding: 7px 0 !important;
+            }
+        }
+        .el-input {
+            display: none
+        }
+        .current-row {
+            .el-input {
+                display: block
+            }
+            .el-input+span {
+                display: none
             }
         }
     }

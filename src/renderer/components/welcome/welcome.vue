@@ -1,17 +1,18 @@
 <template>
     <div class="welcome">
         <div class="wrapper">
-            <div class="header">
-                <div class="logo-wrapper">
-                    <!-- <img src="img/logo.png"> -->
-                </div>
-                <div class="about-wrapper">
-                    <!-- <img src="img/关于我们.png"> -->
-                    <router-link to="/excel">
-                    <span class="txt">关于我们</span>
-                    </router-link>
-                </div>
-            </div>
+            <!--<div class="pagehead">-->
+                <!--<div class="logo-wrapper">-->
+                    <!--&lt;!&ndash; <img src="img/logo.png"> &ndash;&gt;-->
+                <!--</div>-->
+                <!--<div class="about-wrapper">-->
+                    <!--&lt;!&ndash; <img src="img/关于我们.png"> &ndash;&gt;-->
+                    <!--<router-link to="/excel">-->
+                    <!--<span class="txt">关于我们</span>-->
+                    <!--</router-link>-->
+                <!--</div>-->
+            <!--</div>-->
+            <pagehead :showGoBack="false"></pagehead>
             <div class="content">
                 <div class="name">
                     <div class="txt">
@@ -30,7 +31,7 @@
                 <div class="teacher-info-logging">
                     <div class="title">教师班级信息录入</div>
                 </div>
-                <router-link to="/student-info-logging">
+                <router-link to="/main">
                     <div class="student-info-logging">
                         <div class="title">学生信息录入</div>
                     </div>
@@ -61,19 +62,21 @@
 </template>
 
 <script type="text/ecmascript-6">
-export default {
-
-}
+    import pagehead from "@/components/pagehead/pagehead";
+    export default {
+        components: {
+            pagehead
+        }
+    }
 </script>
 
 <style lang="scss" scoped>
     @import '../../common/css/mixin';
-    @import '../../common/_partial/header';
     .wrapper {
         width: 1142px;
         height: 700px;
         background: #0086dd;
-        @import '../../common/_partial/header';
+        /*@import '../../common/_partial/header';*/
         .content {
             position: relative;
             width: 970px;
