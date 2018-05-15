@@ -1,11 +1,6 @@
 <template>
     <div class="siderbar">
         <ul>
-            <!--<li class="active">学生花名册录入</li>-->
-            <!--<li>学生成绩录入</li>-->
-            <!--<li>特长分录入</li>-->
-            <!--<li>学科评价参数录入</li>-->
-            <!--<li>自定义评价公式-->
             <li :class="{'active':index === highLight(value,index)}" v-for="(value, key, index) in routerMap" @click="routerTo(value,index)">{{key}}</li>
             <!--<li :class="highLight(value)" v-for="(value, key) in routerMap" @click="routerTo(value)">{{key}}</li>-->
         </ul>
@@ -40,13 +35,10 @@
             }
         },
         created() {
-//            for(let key in routerMap) {
-//                if(key === this.startRouter) {
-//                    this.active =
-//                }
-//            }
+            /**
+             * vue不能直接修改传过来的startRouter，用一个变量存
+             */
             this.firstRouter = this.startRouter;
-            console.log('this.firstRouter is %s',this.firstRouter);
         },
         data() {
             return {
@@ -56,26 +48,22 @@
         },
         methods: {
             /**
-             * @param value :遍历routerMap的key对应的value
-             * 用于侧边导航栏加载时，高亮指定的startRouter
+             * @param value :遍历routerMap的key对应的value，和当前项的索引
+             * 用于侧边导航栏加载时，高亮指定的Router
+             * firstRouter只用于一次，起始时设置nowindex
+             * 当某一项的索引等于nowindex时进行高亮
              */
             highLight(value, index) {
-                console.log('li index is %s', index);
-                console.log('nowindex is %s', this.nowindex);
                 if(value === this.firstRouter) {
                     this.$router.push(this.firstRouter);
                     this.firstRouter = null;
                     this.nowindex = index;
-//                    return this.nowindex;
-//                    return index;
                 }
-//                else if(this.nowindex !== index) {
-                    return this.nowindex;
-//                }
+                return this.nowindex;
             },
             /**
              * @param value :遍历routerMap的key对应的value
-             * 用于点击相应的li元素，跳转到相应的路由地址
+             * 用于点击相应的li元素，跳转到相应的路由地址，并高亮相应的元素
              */
             routerTo(value,index) {
                 this.$router.push(value);

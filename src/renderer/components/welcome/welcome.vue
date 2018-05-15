@@ -1,17 +1,6 @@
 <template>
     <div class="welcome">
         <div class="wrapper">
-            <!--<div class="pagehead">-->
-                <!--<div class="logo-wrapper">-->
-                    <!--&lt;!&ndash; <img src="img/logo.png"> &ndash;&gt;-->
-                <!--</div>-->
-                <!--<div class="about-wrapper">-->
-                    <!--&lt;!&ndash; <img src="img/关于我们.png"> &ndash;&gt;-->
-                    <!--<router-link to="/excel">-->
-                    <!--<span class="txt">关于我们</span>-->
-                    <!--</router-link>-->
-                <!--</div>-->
-            <!--</div>-->
             <pagehead :showGoBack="false"></pagehead>
             <div class="content">
                 <div class="name">
@@ -48,10 +37,12 @@
                     <div class="logo"></div>
                     <p class="title">数据导出</p>
                 </div>
+                <router-link to="/dataMaintain">
                 <div class="data-maintain component">
                     <div class="logo"></div>
                     <p class="title">数据维护</p>
                 </div>
+                </router-link>
             </div>
             <div class="footer">
                 <span class="left-title">某某某可以 学校评价系统</span>

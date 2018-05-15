@@ -1,8 +1,9 @@
 <template>
+    <div>
     <div class="header">
         <div class="logo-wrapper">
         </div>
-        <div class="about-wrapper">
+        <div class="about-wrapper"  @click="showAboutUs">
             <span class="txt">关于我们</span>
         </div>
         <router-link to="/" v-show="showGoBack">
@@ -11,9 +12,12 @@
             </div>
         </router-link>
     </div>
+    <aboutUs :info="info"></aboutUs>
+    </div>
 </template>
 
 <script type="text/ecmascript-6">
+    import aboutUs from '@/components/aboutUs/aboutUs'
     export default {
         props: {
             showGoBack: {
@@ -21,6 +25,25 @@
                 default() {
                     return false;
                 }
+            }
+        },
+        components: {
+            aboutUs
+        },
+        data() {
+          return {
+              info: false
+          }
+        },
+        methods: {
+            showAboutUs() {
+                if(this.info === false) {
+                    this.info = true;
+                }
+                else {
+                    this.info = false;
+                }
+                console.log('from parent '+this.info);
             }
         }
     }

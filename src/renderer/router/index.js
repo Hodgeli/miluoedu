@@ -48,6 +48,11 @@ export default new Router({
             component: require('@/components/Excel').default
         },
         {
+            path: '/dataMaintain',
+            name: 'dataMaintain',
+            component: require('@/components/dataMaintain/dataMaintain').default
+        },
+        {
             path: '*',
             redirect: '/'
         }
