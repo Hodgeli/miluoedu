@@ -74,6 +74,8 @@ app.on('ready', () => {
   if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
 })
  */
+
+// 打开文件保存窗口
 const ipc = require('electron').ipcMain
 const dialog = require('electron').dialog
 
