@@ -165,7 +165,7 @@
           var wsname = wb.SheetNames[0];
           var ws = wb.Sheets[wsname];
 
-          /* excel转换json数组,加上{header:1}是普通数组，不写是对象数组 */
+          /* excel转换json数组,加上{pagehead:1}是普通数组，不写是对象数组 */
           self.data = XLSX.utils.sheet_to_json(ws);
 //          this.$nextTick(() => {
               self.userlist = self.data;
