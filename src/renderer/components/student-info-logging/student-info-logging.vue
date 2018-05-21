@@ -92,7 +92,7 @@
         <el-pagination
             background
             layout="prev, pager, next"
-            :total="userlist.length"
+            :total="filterDated.length"
             :page-size="pagesize"
             :current-page.sync = "currentPage"
             @current-change="current_change">
@@ -130,9 +130,9 @@
                 return this.userlist.filter((item) => {
                     return !this.searchStudentName || this.searchStudentName === item.姓名;
                 }).filter((item)=>{
-                    return !this.searchClass || this.searchClass === item.学号;
+                    return !this.searchClass || this.searchClass === item.班级;
                 }).filter((item)=>{
-                    return !this.searchGrade || this.searchGrade === item.班级;
+                    return !this.searchGrade || this.searchGrade === item.年级;
                 }).filter((item)=>{
                     return !this.searchStudentNum || this.searchStudentNum === item.学号;
                 })
