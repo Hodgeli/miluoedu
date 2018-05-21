@@ -1,3 +1,4 @@
+学生分数录入
 <template>
     <div class="special-point-logging">
         <p>this is special-point-logging</p>

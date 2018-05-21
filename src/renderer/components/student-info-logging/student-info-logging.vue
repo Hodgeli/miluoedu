@@ -8,7 +8,13 @@
             <el-input width="50" v-model="searchClass" placeholder="选择班级"></el-input>
         </span>
         <span class="search">
-            <el-input width="50" v-model="searchStudentId" placeholder="选择学号"></el-input>
+            <el-input width="50" v-model="searchStudentNum" placeholder="选择学号"></el-input>
+        </span>
+        <span class="search">
+            <el-input width="50" v-model="searchStudentName" placeholder="选择姓名"></el-input>
+        </span>
+        <span class="search">
+            <el-input width="50" v-model="searchGrade" placeholder="选择年级"></el-input>
         </span>
     </div>
     <div class="table-wrapper">
@@ -22,7 +28,7 @@
                 size="small"
                 :highlight-current-row="true"
                 @row-click="handleCurrentChange"
-                :data="userlist.slice((currentPage-1)*pagesize,currentPage*pagesize)">
+                :data="filterDated.slice((currentPage-1)*pagesize,currentPage*pagesize)">
             <el-table-column
                     prop="姓名"
                     label="用户名"
@@ -113,11 +119,30 @@
                 currentPage: 1,
                 pagesize: 9,
                 searchClass: '',
-                searchStudentId: ''
+                searchStudentNum: '',
+                searchStudentName: '',
+                searchGrade: '',
+            }
+        },
+        computed: {
+            filterDated() {
+                console.log(this.userlist);
+                return this.userlist.filter((item) => {
+                    return !this.searchStudentName || this.searchStudentName === item.姓名;
+                }).filter((item)=>{
+                    return !this.searchClass || this.searchClass === item.学号;
+                }).filter((item)=>{
+                    return !this.searchGrade || this.searchGrade === item.班级;
+                }).filter((item)=>{
+                    return !this.searchStudentNum || this.searchStudentNum === item.学号;
+                })
             }
         },
         methods: {
             filterGradeHandler(value, row, column) {
+                console.log('value is ',value);
+                console.log('row is ',row);
+                console.log('column is ',column);
                 const property = column['property'];
                 return row[property] === value;
             },
@@ -129,9 +154,6 @@
 //                console.log(row, event, column, event.currentTarget)
             },
             handleDelete(index,row,userlist) {
-//                console.log('delete: now index is ',index);
-//                console.log('delete: now row is ',row.__rowNum__);
-//                console.log('userlist length is',userlist.length);
                 this.userlist.splice(row.__rowNum__-1, 1);
             },
             handleEdit(index, row) {
@@ -170,11 +192,11 @@
 
                     /* excel转换json数组,加上{pagehead:1}是普通数组，不写是对象数组 */
                     self.userlist = XLSX.utils.sheet_to_json(ws);
+
                     /* 生成html表格 --> 改用json*/
 //                    var HTML = XLSX.utils.sheet_to_html(ws);
 //                    document.getElementById('out-table').innerHTML = HTML;
                 };
-
                 reader.readAsArrayBuffer(file);
             },
             saveExcel:function () {
@@ -198,7 +220,6 @@
                     /* add to workbook */
                     var wb = XLSX.utils.book_new();
                     XLSX.utils.book_append_sheet(wb, ws, "chengjiTest");
-
 //                    var wb = XLSX.utils.table_to_book(document.getElementById('out-table'));
                     /* 生成文件，导出D盘 */
                     XLSX.writeFile(wb, path);
