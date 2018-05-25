@@ -20,7 +20,7 @@
                 prop="姓名"
                 label="用户名"
                 min-width="80">
-          <template scope="scope">
+          <template slot-scope="scope">
             <el-input size="small" v-model="scope.row.姓名"
                       @change="handleEdit(scope.$index, scope.row)">
             </el-input>
@@ -34,7 +34,7 @@
                 prop="学号"
                 label="学号"
                 min-width="80">
-          <template scope="scope">
+          <template slot-scope="scope">
           <el-input size="small" v-model="scope.row.学号"
                     @change="handleEdit(scope.$index, scope.row)">
           </el-input>
@@ -45,7 +45,7 @@
                 prop="班级"
                 label="班级"
                 min-width="100">
-          <template scope="scope">
+          <template slot-scope="scope">
           <el-input size="small" v-model="scope.row.班级"
                     @change="handleEdit(scope.$index, scope.row)">
           </el-input>
@@ -56,7 +56,7 @@
                 prop="年级"
                 label="年级"
                 min-width="100">
-          <template scope="scope">
+          <template slot-scope="scope">
           <el-input size="small" v-model="scope.row.年级"
                     @change="handleEdit(scope.$index, scope.row)">
           </el-input>

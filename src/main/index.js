@@ -1,4 +1,8 @@
 import { app, BrowserWindow } from 'electron'
+import fs from 'fs'
+import path from 'path'
+const ipc = require('electron').ipcMain
+const dialog = require('electron').dialog
 
 /**
  * Set `__static` path to static files in production
@@ -22,7 +26,6 @@ const winURL = process.env.NODE_ENV === 'development'
 // const workSheetsFromBuffer = xlsx.parse(fs.readFileSync(`${__dirname}/chengji.xlsx`));
 // Parse a file
 // const workSheetsFromFile = xlsx.parse(`${__dirname}/chengji.xlsx`);
-
 
 function createWindow () {
   /**
@@ -76,9 +79,6 @@ app.on('ready', () => {
  */
 
 // 打开文件保存窗口
-const ipc = require('electron').ipcMain
-const dialog = require('electron').dialog
-
 ipc.on('save-dialog', function (event) {
     const options = {
         title: '保存表格',
@@ -89,4 +89,25 @@ ipc.on('save-dialog', function (event) {
     dialog.showSaveDialog(options, function (filename) {
         event.sender.send('saved-file', filename)
     })
+})
+
+
+/**
+ * 读取static目录下的studentGrade.json，ipc双向通信传值(存疑：不知道是否有性能问题)
+ * 待做：需要抽离出更通用的读取文件和保存文件的接口
+ */
+// let fileContents = fs.readFileSync(path.join(__static, '/studentGrade.json'), 'utf8')
+
+ipc.on('read-stu-grade',  (event) => {
+    fs.readFile(path.join(__static, '/studentGrade.json'), 'utf8', (err, data) => {
+        if (err) throw err;
+        event.returnValue = data;
+    });
+})
+
+ipc.on('save-stu-grade',  (event,args) =>{
+    console.log('now the args.data is',args.data);
+    fs.writeFile(path.join(__static, '/studentGrade.json'), JSON.stringify(args.data), (err) => {
+        if (err) throw err;
+    });
 })

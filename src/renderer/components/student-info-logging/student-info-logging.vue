@@ -33,7 +33,7 @@
                     prop="姓名"
                     label="用户名"
                     min-width="80">
-                <template scope="scope">
+                <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.姓名"
                               @change="handleEdit(scope.$index, scope.row)">
                     </el-input>
@@ -47,7 +47,7 @@
                     prop="学号"
                     label="学号"
                     min-width="80">
-                <template scope="scope">
+                <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.学号"
                               @change="handleEdit(scope.$index, scope.row)">
                     </el-input>
@@ -58,7 +58,7 @@
                     prop="班级"
                     label="班级"
                     min-width="80">
-                <template scope="scope">
+                <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.班级"
                               @change="handleEdit(scope.$index, scope.row)">
                     </el-input>
@@ -71,7 +71,7 @@
                     min-width="80"
                     :filters="[{text: '七年级', value: '7'}, {text: '八年级', value: '8'}, {text: '九年级', value: '9'}]"
                     :filter-method="filterGradeHandler">
-                <template scope="scope">
+                <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.年级"
                               @change="handleEdit(scope.$index, scope.row)">
                     </el-input>
@@ -85,7 +85,7 @@
                     <el-button
                             size="mini"
                             type="danger"
-                            @click.native.prevent="handleDelete(scope.$index, scope.row, userlist)">删除</el-button>
+                            @click.native.prevent="handleDelete(scope.$index, scope.row)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -138,6 +138,7 @@
                 })
             }
         },
+
         methods: {
             filterGradeHandler(value, row, column) {
                 console.log('value is ',value);
@@ -147,20 +148,29 @@
                 return row[property] === value;
             },
             addRow() {
-                this.userlist.push({});
-                this.currentPage =Math.ceil(this.userlist.length/this.pagesize);
+                this.$nextTick(()=>{
+                    this.userlist.push({__rowNum__: this.userlist.length+1 });
+                    this.currentPage =Math.ceil(this.userlist.length/this.pagesize);
+                })
             },
             handleCurrentChange(row, event, column) {
 //                console.log(row, event, column, event.currentTarget)
             },
-            handleDelete(index,row,userlist) {
-                this.userlist.splice(row.__rowNum__-1, 1);
+            handleDelete(index,row) {
+//                console.log('delete: now index is ',index);
+//                console.log('delete: now row is ',row);
+//                console.log('delete: now row.__rowNum__ is ',row.__rowNum__);
+//                console.log('delete: now this.currentPage*index is',(this.currentPage-1)*this.pagesize+(index+1))
+//                console.log('delete: now this.userlist is ',this.userlist);
+                let location = (this.currentPage-1)*this.pagesize+(index+1);
+                this.userlist.splice(location-1, 1);
             },
             handleEdit(index, row) {
                 console.log(index, row);
             },
             current_change(currentPage) {
                 this.currentPage = currentPage;
+                console.log('currentPage is ',currentPage);
             },
             onchange: function (evt) {
                 var file;

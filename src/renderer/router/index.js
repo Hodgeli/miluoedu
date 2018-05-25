@@ -18,28 +18,28 @@ export default new Router({
                 {
                     path: '/student-info-logging',
                     name: 'student-info-logging',
-                    component: require('@/components/student-info-logging/student-info-logging').default
+                    component: require('@/components/student-info-logging/student-info-logging').default,
                 },
                 {
                     path: '/student-grade-logging',
                     name: 'student-grade-logging',
-                    component: require('@/components//student-grade-logging//student-grade-logging').default
+                    component: require('@/components/student-info-logging/student-grade-logging/student-grade-logging').default
                 },
                 {
                     path: '/special-point-logging',
                     name: 'special-point-logging',
-                    component: require('@/components//special-point-logging//special-point-logging').default
+                    component: require('@/components/student-info-logging/special-point-logging/special-point-logging').default
                 },
                 {
                     path: '/subject-evalu-logging',
                     name: 'subject-evalu-logging',
-                    component: require('@/components/subject-evalu-logging/subject-evalu-logging').default
+                    component: require('@/components/student-info-logging/subject-evalu-logging/subject-evalu-logging').default
                 },
                 {
                     path: '/custom-evalu-logging',
                     name: 'custom-evalu-logging',
-                    component: require('@/components/custom-evalu-logging/custom-evalu-logging').default
-                },
+                    component: require('@/components/student-info-logging/custom-evalu-logging/custom-evalu-logging').default
+                }
             ]
         },
         {
